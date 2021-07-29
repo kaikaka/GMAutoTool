@@ -5,11 +5,10 @@
 //  Created by Yoon on 2021/7/27.
 //
 
-import CommandLineKit
 import Foundation
 import PathKit
-import RainbowSwift
 import XcodeProj
+import Fuzi
 
 class TargetChanged {
     /// 复制target
@@ -58,88 +57,78 @@ class TargetChanged {
 
         } catch {}
     }
-    func addNewGroupAndFileReference(_ path: String) {
+    
+    func addGroupAndFileReference(_ path: String) {
         let path = "/Users/Yoon/Desktop/CrownName/CrownName/Sources/copy_groups.rb"
         let res = TargetChanged.shell(launchPath: "/usr/bin/ruby", arguments: [path])
         print("*** ls ***:\n\(res)")
     }
-    func addNewFileReference(_ path: String) {
-        guard let xcodeproj = try? XcodeProj(pathString: path) else { return }
-//        for item in xcodeproj.pbxproj.fileReferences {
-//            print("fileReferences = \(item.name)\n")
-//        }
-//        for item in xcodeproj.pbxproj.buildFiles {
-//            print("buildFiles = \(item.file?.name)\n")
-//        }
-//        for item in xcodeproj.pbxproj.buildPhases {
-//            print("buildPhases = \(item.files)\n")
-//        }
+    
+    func readInfo(_ path: String) {
         
-//        for item in xcodeproj.pbxproj.copyFilesBuildPhases {
-//            print("buildPhases = \(item.name)\n")
-//        }
-        for item in xcodeproj.pbxproj.groups {
-//            print(item.name)
-            if let path1 = item.path,path1 == "Assets" {
-               
-                for child in item.children {
-//                    print(child.name,child.path)
-                    
-                }
-                
-//                try? item.addFile(at: Path.init( "/Users/Yoon/Desktop/live/fooww-mobile-ios/Foowwphone/Assets/GuanMing/ColorConfig.plist"),
-//                             sourceRoot: Path.init("SOURCE_ROOT"))
-            }
-        }
-        
-        var target: PBXNativeTarget!
-        for item in xcodeproj.pbxproj.nativeTargets {
-            if item.name == "GuanMing" {
-                target = item
-            }
-        }
-        
-        
-        for item in target.buildPhases {
-//            print(item.files?.count)
-//            print(item.name())
-            if item.name() == "Resources" {
-                for item1 in item.files! {
-                    
-                    if let pathf = item1.file?.path,pathf == "ColorConfig.plist" {
-//                        let idx = item.files?.firstIndex(of: item1) ?? 0
-//                        item.files?.remove(at: idx)
-//                        print(item1.file?.sourceTree.publisher)
-//                        print(item1.file?.parent)
-                    }
-                    
-                }
-                /*
-                 case none
-                 case absolute
-                 case group
-                 case sourceRoot
-                 case buildProductsDir
-                 case sdkRoot
-                 case developerDir
-                 case custom(String)
-                 */
-//                let sourceTree = PBXSourceTree.init(value: "SOURCE_ROOT")
-//                let pb = PBXFileElement.init(sourceTree: sourceTree, path: "/Users/Yoon/Desktop/live/fooww-mobile-ios/Foowwphone/Assets/GuanMing/ColorConfig.plist", name: "ColorConfig", includeInIndex: nil, usesTabs: nil, indentWidth: nil, tabWidth: nil, wrapsLines: nil)
-//                let pb1 = PBXBuildFile.init(file: pb, product: nil, settings: nil)
-//                try? item.ad
-            }
-        }
-        //Users/Yoon/Desktop/live/fooww-mobile-ios/Foowwphone/Assets/GuanMing/ColorConfig.plist
-        
-//        let sourceTree = PBXSourceTree.init(value: "/Users/Yoon/Desktop/live/fooww-mobile-ios/Foowwphone/Assets/GuanMing/ColorConfig.plist")
+//        let openPanel = NSOpenPanel()
+//            openPanel.allowsMultipleSelection = false
+//            openPanel.canChooseDirectories = false
+//            openPanel.canCreateDirectories = false
+//            openPanel.canChooseFiles = true
+//        openPanel.begin { (result) -> Void in
+//            if result.rawValue == NSFileHandlingPanelOKButton {
+//                let selectedPath = openPanel.url!.path
+//                let data = FileManager.default.contents(atPath: selectedPath)!
+//                let readString = String(data: data, encoding: String.Encoding.utf8)
+////                print(readString)
+//                let newReadString = readString!.replacingOccurrences(of: "鑫铭地产", with: "冠名测试")
 //
-//        let fileReference = PBXFileReference.init(sourceTree: sourceTree, name: "ColorConfig.plist", fileEncoding: nil, explicitFileType: nil, lastKnownFileType: nil, path: nil, includeInIndex: nil, wrapsLines: nil, usesTabs: nil, indentWidth: nil, tabWidth: nil, lineEnding: nil, languageSpecificationIdentifier: nil, xcLanguageSpecificationIdentifier: nil, plistStructureDefinitionIdentifier: nil)
+////                let error = try? newReadString.write(to: URL.init(string: selectedPath)!, atomically: true, encoding: String.Encoding.utf8)
+////
+////                print(error)
+//
+//                let savePanel = NSSavePanel()
+//
+//                // this is a preferred method to get the desktop URL
+//                savePanel.directoryURL = FileManager.default.urls(for: .desktopDirectory, in: .userDomainMask).first!
+//
+//                savePanel.message = "My custom message."
+//                savePanel.nameFieldStringValue = "MyFile"
+//                savePanel.showsHiddenFiles = false
+//                savePanel.showsTagField = false
+//                savePanel.canCreateDirectories = true
+//                savePanel.allowsOtherFileTypes = false
+//                savePanel.isExtensionHidden = true
+//
+//                if let url = savePanel.url, savePanel.runModal().rawValue == NSFileHandlingPanelOKButton {
+//
+//                    // Do the actual copy:
+//                    do {
+//                        try FileManager().copyItem(at: URL.init(string: "file:///Users/Yoon/Desktop/live/fooww-mobile-ios/Foowwphone/Assets/GuanMing5/info.plist")!, to: url)
+//                    } catch {
+//                        print(error.localizedDescription)
+//                    }
+//                } else {
+//                    print("canceled")
+//                }
+//            }
+//            openPanel.close()
+//        }
         
+       
         
-//        try? xcodeproj.write(pathString: path, override: true)
-        
-        
+        let fileManager = FileManager.default
+
+        if let url = URL(string: path) {
+            if fileManager.fileExists(atPath: url.path) {
+                let data = fileManager.contents(atPath: url.path)!
+
+                let readString = String.init(data: data, encoding: String.Encoding.utf8)
+                let newReadString = readString!.replacingOccurrences(of: "鑫铭地产", with: "冠名测试")
+
+                let error = try? newReadString.write(to: URL.init(string: "file://\(url.path)")!, atomically: true, encoding: String.Encoding.utf8)
+
+                print(error)
+            } else {
+                print("Path loss file is not exists")
+            }
+        }
     }
     
     /// 静态方法 方便之后脚本调用

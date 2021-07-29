@@ -11,6 +11,6 @@
 #endif
 
 
-FOUNDATION_EXPORT double RainbowSwiftVersionNumber;
-FOUNDATION_EXPORT const unsigned char RainbowSwiftVersionString[];
+FOUNDATION_EXPORT double FuziVersionNumber;
+FOUNDATION_EXPORT const unsigned char FuziVersionString[];
 

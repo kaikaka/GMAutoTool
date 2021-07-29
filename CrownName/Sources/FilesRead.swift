@@ -7,7 +7,6 @@
 
 import Foundation
 import PathKit
-import RainbowSwift
 import CommandLineKit
 import XcodeProj
 

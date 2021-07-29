@@ -177,12 +177,14 @@ code_sign_if_enabled() {
 if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/AEXML/AEXML.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/CommandLineKit/CommandLineKit.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/Fuzi/Fuzi.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/PathKit/PathKit.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/xcodeproj/XcodeProj.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/AEXML/AEXML.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/CommandLineKit/CommandLineKit.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/Fuzi/Fuzi.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/PathKit/PathKit.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/xcodeproj/XcodeProj.framework"
 fi

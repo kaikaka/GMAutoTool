@@ -20,8 +20,9 @@ class ViewController: NSViewController {
 //            target.duplicateTarget()
 //            target.newTargetInfoChanged(path)
 //            target.copySource()
-            target.addNewGroup(path)
-//            target.addNewFileReference(path)
+//            target.addGroupAndFileReference(path)
+//            let infoPath = "/Users/Yoon/Desktop/live/fooww-mobile-ios/Foowwphone/Assets/GuanMing5/info.plist"
+//            target.readInfo(infoPath)
         }
     }
 

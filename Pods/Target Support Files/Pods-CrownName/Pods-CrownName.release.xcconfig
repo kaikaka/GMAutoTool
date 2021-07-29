@@ -1,10 +1,10 @@
 ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES
 CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = NO
-FRAMEWORK_SEARCH_PATHS = $(inherited) "${PODS_CONFIGURATION_BUILD_DIR}/AEXML" "${PODS_CONFIGURATION_BUILD_DIR}/CommandLineKit" "${PODS_CONFIGURATION_BUILD_DIR}/PathKit" "${PODS_CONFIGURATION_BUILD_DIR}/RainbowSwift" "${PODS_CONFIGURATION_BUILD_DIR}/xcodeproj"
+FRAMEWORK_SEARCH_PATHS = $(inherited) "${PODS_CONFIGURATION_BUILD_DIR}/AEXML" "${PODS_CONFIGURATION_BUILD_DIR}/CommandLineKit" "${PODS_CONFIGURATION_BUILD_DIR}/Fuzi" "${PODS_CONFIGURATION_BUILD_DIR}/PathKit" "${PODS_CONFIGURATION_BUILD_DIR}/xcodeproj"
 GCC_PREPROCESSOR_DEFINITIONS = $(inherited) COCOAPODS=1
-HEADER_SEARCH_PATHS = $(inherited) "${PODS_CONFIGURATION_BUILD_DIR}/AEXML/AEXML.framework/Headers" "${PODS_CONFIGURATION_BUILD_DIR}/CommandLineKit/CommandLineKit.framework/Headers" "${PODS_CONFIGURATION_BUILD_DIR}/PathKit/PathKit.framework/Headers" "${PODS_CONFIGURATION_BUILD_DIR}/RainbowSwift/RainbowSwift.framework/Headers" "${PODS_CONFIGURATION_BUILD_DIR}/xcodeproj/XcodeProj.framework/Headers"
+HEADER_SEARCH_PATHS = $(inherited) "${PODS_CONFIGURATION_BUILD_DIR}/AEXML/AEXML.framework/Headers" "${PODS_CONFIGURATION_BUILD_DIR}/CommandLineKit/CommandLineKit.framework/Headers" "${PODS_CONFIGURATION_BUILD_DIR}/Fuzi/Fuzi.framework/Headers" "${PODS_CONFIGURATION_BUILD_DIR}/PathKit/PathKit.framework/Headers" "${PODS_CONFIGURATION_BUILD_DIR}/xcodeproj/XcodeProj.framework/Headers" $(SDKROOT)/usr/include/libxml2
 LD_RUNPATH_SEARCH_PATHS = $(inherited) '@executable_path/../Frameworks' '@loader_path/Frameworks'
-OTHER_LDFLAGS = $(inherited) -ObjC -framework "AEXML" -framework "CommandLineKit" -framework "PathKit" -framework "RainbowSwift" -framework "XcodeProj"
+OTHER_LDFLAGS = $(inherited) -l"xml2" -framework "AEXML" -framework "CommandLineKit" -framework "Fuzi" -framework "PathKit" -framework "XcodeProj"
 OTHER_SWIFT_FLAGS = $(inherited) -D COCOAPODS
 PODS_BUILD_DIR = ${BUILD_DIR}
 PODS_CONFIGURATION_BUILD_DIR = ${PODS_BUILD_DIR}/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)

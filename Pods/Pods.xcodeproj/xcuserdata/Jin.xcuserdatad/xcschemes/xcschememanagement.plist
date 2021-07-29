@@ -18,35 +18,35 @@
 			<key>orderHint</key>
 			<integer>1</integer>
 		</dict>
-		<key>PathKit.xcscheme</key>
+		<key>Fuzi.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
 			<key>orderHint</key>
 			<integer>2</integer>
 		</dict>
-		<key>Pods-CrownName-CrownNameUITests.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-			<key>orderHint</key>
-			<integer>4</integer>
-		</dict>
-		<key>Pods-CrownName.xcscheme</key>
+		<key>PathKit.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
 			<key>orderHint</key>
 			<integer>3</integer>
 		</dict>
-		<key>Pods-CrownNameTests.xcscheme</key>
+		<key>Pods-CrownName-CrownNameUITests.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
 			<key>orderHint</key>
 			<integer>5</integer>
 		</dict>
-		<key>RainbowSwift.xcscheme</key>
+		<key>Pods-CrownName.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+			<key>orderHint</key>
+			<integer>4</integer>
+		</dict>
+		<key>Pods-CrownNameTests.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>

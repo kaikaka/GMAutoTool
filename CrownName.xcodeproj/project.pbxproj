@@ -49,7 +49,6 @@
 		3C78547526AACBA300AA4693 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3C78547826AACBA300AA4693 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		3C78547A26AACBA300AA4693 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		3C78547B26AACBA300AA4693 /* CrownName.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CrownName.entitlements; sourceTree = "<group>"; };
 		3C78548026AACBA300AA4693 /* CrownNameTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CrownNameTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3C78548426AACBA300AA4693 /* CrownNameTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrownNameTests.swift; sourceTree = "<group>"; };
 		3C78548626AACBA300AA4693 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -61,6 +60,7 @@
 		3C89FC8026B154020050DB40 /* duplicate_xcode_project_target.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = duplicate_xcode_project_target.rb; sourceTree = "<group>"; };
 		3C89FC8626B24DDB0050DB40 /* duplicate_xcode_project_target2.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = duplicate_xcode_project_target2.rb; sourceTree = "<group>"; };
 		3CE7F2BF26B2850700438A59 /* copy_groups.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = copy_groups.rb; sourceTree = "<group>"; };
+		3CE7F2C526B2A92500438A59 /* CrownName.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = CrownName.entitlements; sourceTree = "<group>"; };
 		43EF4BD5CBB3AC2C30E66DE5 /* Pods_CrownNameTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CrownNameTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4456D47B66284942C5501863 /* Pods-CrownName-CrownNameUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CrownName-CrownNameUITests.debug.xcconfig"; path = "Target Support Files/Pods-CrownName-CrownNameUITests/Pods-CrownName-CrownNameUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		74A2C84A338BBC9BCF38B526 /* Pods-CrownNameTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CrownNameTests.debug.xcconfig"; path = "Target Support Files/Pods-CrownNameTests/Pods-CrownNameTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -136,13 +136,13 @@
 		3C78547026AACBA100AA4693 /* CrownName */ = {
 			isa = PBXGroup;
 			children = (
+				3CE7F2C526B2A92500438A59 /* CrownName.entitlements */,
 				3C7854AC26AACC2800AA4693 /* Sources */,
 				3C78547126AACBA100AA4693 /* AppDelegate.swift */,
 				3C78547326AACBA100AA4693 /* ViewController.swift */,
 				3C78547526AACBA300AA4693 /* Assets.xcassets */,
 				3C78547726AACBA300AA4693 /* Main.storyboard */,
 				3C78547A26AACBA300AA4693 /* Info.plist */,
-				3C78547B26AACBA300AA4693 /* CrownName.entitlements */,
 			);
 			path = CrownName;
 			sourceTree = "<group>";
