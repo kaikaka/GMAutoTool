@@ -1,0 +1,6 @@
+framework module CommandLineKit {
+  umbrella header "CommandLineKit-umbrella.h"
+
+  export *
+  module * { export * }
+}

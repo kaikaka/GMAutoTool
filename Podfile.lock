@@ -1,0 +1,41 @@
+PODS:
+  - AEXML (4.6.0)
+  - CommandLineKit (2.3.0)
+  - PathKit (1.0.0)
+  - RainbowSwift (4.0.0)
+  - xcodeproj (8.0.0):
+    - AEXML (~> 4.6.0)
+    - PathKit (~> 1.0.0)
+
+DEPENDENCIES:
+  - CommandLineKit
+  - PathKit
+  - RainbowSwift (from `https://github.com/onevcat/Rainbow.git`)
+  - xcodeproj
+
+SPEC REPOS:
+  trunk:
+    - AEXML
+    - CommandLineKit
+    - PathKit
+    - xcodeproj
+
+EXTERNAL SOURCES:
+  RainbowSwift:
+    :git: https://github.com/onevcat/Rainbow.git
+
+CHECKOUT OPTIONS:
+  RainbowSwift:
+    :commit: 8b731679956e6f8f0a9ca5fab7f498c19a15fa30
+    :git: https://github.com/onevcat/Rainbow.git
+
+SPEC CHECKSUMS:
+  AEXML: 2fbb73d8724797ed2cde888731e176fa4d44dd83
+  CommandLineKit: 559e1c22ddf26b6224b398a1b3db12d2ce796182
+  PathKit: 364e0de7fb5adb142aecab4e112187e5548fc4b6
+  RainbowSwift: 08a7d1719e935c45c29be7990d9ce1747733f5a7
+  xcodeproj: 83dc5550d7cf42a34b030eaa2c86f8223e9fbb79
+
+PODFILE CHECKSUM: 50d4e3c66a193cbf3f101bee95049426099a9da5
+
+COCOAPODS: 1.10.0
