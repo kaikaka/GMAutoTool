@@ -276,12 +276,12 @@
                             <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="UVp-vS-Sjp">
                                 <rect key="frame" x="79" y="485" width="297" height="25"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <popUpButtonCell key="cell" type="push" title="请选择源Target" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="ZrS-WO-zHX" id="EGz-wC-Ahg">
+                                <popUpButtonCell key="cell" type="push" title="请选择源Target" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="ZrS-WO-zHX" id="EGz-wC-Ahg">
                                     <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="menu"/>
                                     <menu key="menu" id="8qZ-bw-FTZ">
                                         <items>
-                                            <menuItem title="请选择源Target" id="ZrS-WO-zHX">
+                                            <menuItem title="请选择源Target" state="on" id="ZrS-WO-zHX">
                                                 <modifierMask key="keyEquivalentModifierMask"/>
                                             </menuItem>
                                         </items>
@@ -356,6 +356,11 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="appIdTextFiled" destination="GpT-HQ-doV" id="Zrb-it-G8m"/>
+                        <outlet property="baiduIdTextField" destination="VLV-t2-HJk" id="UIe-rX-c46"/>
+                        <outlet property="buildIdTextFiled" destination="Reg-kG-Xyi" id="INz-6c-CpF"/>
+                        <outlet property="colorTextFiled" destination="2gi-CJ-GNE" id="NwZ-lQ-VAK"/>
+                        <outlet property="companyInfoTextField" destination="VUG-BV-wiF" id="6GQ-K8-Epv"/>
                         <outlet property="logTextView" destination="HW5-hT-4B1" id="Zzp-bQ-QCC"/>
                         <outlet property="prjectPathTextFiled" destination="7S8-vF-8mc" id="kGw-VI-Xz4"/>
                         <outlet property="targetCnName" destination="szw-nw-VJm" id="uhF-cm-4mi"/>

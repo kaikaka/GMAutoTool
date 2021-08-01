@@ -16,6 +16,11 @@ class ViewController: NSViewController {
     
     @IBOutlet weak var targetCnName: NSTextField!
     @IBOutlet weak var targetEnName: NSTextField!
+    @IBOutlet weak var buildIdTextFiled: NSTextField!
+    @IBOutlet weak var colorTextFiled: NSTextField!
+    @IBOutlet weak var appIdTextFiled: NSTextField!
+    @IBOutlet weak var baiduIdTextField: NSTextField!
+    @IBOutlet weak var companyInfoTextField: NSTextField!
     
     var projectProperty:ProjVariable = ProjVariable.init()
     let projTools:ReProjTools = ReProjTools()
@@ -88,6 +93,12 @@ class ViewController: NSViewController {
         }
         self.projectProperty.newEnNameTarget = self.targetEnName.stringValue
         self.projectProperty.sourceNameTarget = self.targetPopupItems.selectedItem?.title
+        self.projectProperty.newCnNameTarget = targetCnName.stringValue
+        self.projectProperty.buildId = buildIdTextFiled.stringValue
+        self.projectProperty.mainColor = colorTextFiled.stringValue
+        self.projectProperty.appID = appIdTextFiled.stringValue
+        self.projectProperty.baiduSkdId = baiduIdTextField.stringValue
+        self.projectProperty.companyInfo = companyInfoTextField.stringValue
         
         let group = DispatchGroup()
         let serialQueue = DispatchQueue(label: "exec_queue")
@@ -112,6 +123,15 @@ class ViewController: NSViewController {
 //                }
 //            }
 //        }
+//                group.enter()
+//                serialQueue.async {
+//                    self.projTools.remResourceFileRef(self.projectProperty) { suc in
+//                        if suc {
+//                            print("44444")
+//                            group.leave()
+//                        }
+//                    }
+//                }
 
 //        group.enter()
 //        serialQueue.async {
@@ -125,14 +145,15 @@ class ViewController: NSViewController {
         
 //        group.enter()
 //        serialQueue.async {
-            self.projTools.addResourceFileRef(self.projectProperty) { suc in
-                if suc {
-                    print("44444")
+//            self.projTools.modifyInfoSettings(self.projectProperty) { suc in
+//                if suc {
+//                    print("66666")
 //                    group.leave()
-                }
-            }
+//                }
+//            }
 //        }
-        
+        self.projTools.modifyInfoPlistFile(self.projectProperty)
+//        self.projTools.modifyColorPlistFile(self.projectProperty)
 //        group.notify(queue: DispatchQueue.main) {
 //            print("55555")
 //        }
