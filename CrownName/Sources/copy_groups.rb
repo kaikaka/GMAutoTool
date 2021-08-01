@@ -2,22 +2,21 @@
 
 require 'rubygems'
 require 'xcodeproj'
-require 'fileutils'
 
-name = 'GuanMing'
+name = 'GUANMING-TEMP-ROOTNAME'
 
-project = Xcodeproj::Project.open('/Users/Yoon/Desktop/live/fooww-mobile-ios/Foowwphone.xcodeproj')
-target = project.targets.find { |item| item.to_s == 'GuanMing' }
+project = Xcodeproj::Project.open('GUANMING-TEMP-PATH')
+target = project.targets.find { |item| item.to_s == 'GUANMING-TEMP-ROOTNAME' }
 
-new_path = File.join("Foowwphone/Supporting Files/Assets","GuanMing5")
+new_path = File.join("Foowwphone/Supporting Files/Assets","GUANMING-TEMP-ROOTNAME")
 group = project.main_group.find_subpath(new_path, true )
 group.set_source_tree("<group>")
-group.set_path("GuanMing5")
+group.set_path("GUANMING-TEMP-ROOTNAME")
 
-file_ref1 = group.new_reference(File.join(project.project_dir, "/Foowwphone/Assets/GuanMing/ColorConfig.plist"))
-file_ref2 = group.new_reference(File.join(project.project_dir, "/Foowwphone/Assets/GuanMing/Only.xcassets"))
-file_ref3 = group.new_reference(File.join(project.project_dir, "/Foowwphone/Assets/GuanMing/Launch Screen.storyboard"))
-file_ref4 = group.new_reference(File.join(project.project_dir, "/Foowwphone/Assets/GuanMing/Info.plist"))
+file_ref1 = group.new_reference(File.join(project.project_dir, "/Foowwphone/Assets/GUANMING-TEMP-ROOTNAME/ColorConfig.plist"))
+file_ref2 = group.new_reference(File.join(project.project_dir, "/Foowwphone/Assets/GUANMING-TEMP-ROOTNAME/Only.xcassets"))
+file_ref3 = group.new_reference(File.join(project.project_dir, "/Foowwphone/Assets/GUANMING-TEMP-ROOTNAME/Launch Screen.storyboard"))
+file_ref4 = group.new_reference(File.join(project.project_dir, "/Foowwphone/Assets/GUANMING-TEMP-ROOTNAME/Info.plist"))
 
 target.add_file_references([file_ref1,file_ref2,file_ref3,file_ref4])
 

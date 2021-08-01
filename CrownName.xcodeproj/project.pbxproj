@@ -13,10 +13,9 @@
 		3C78547926AACBA300AA4693 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3C78547726AACBA300AA4693 /* Main.storyboard */; };
 		3C78548526AACBA300AA4693 /* CrownNameTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C78548426AACBA300AA4693 /* CrownNameTests.swift */; };
 		3C78549026AACBA300AA4693 /* CrownNameUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C78548F26AACBA300AA4693 /* CrownNameUITests.swift */; };
-		3C89E9C026AF96290050DB40 /* FilesRead.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C89E9BF26AF96290050DB40 /* FilesRead.swift */; };
-		3C89F30226AFEE280050DB40 /* TargetDuplicate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C89F30126AFEE280050DB40 /* TargetDuplicate.swift */; };
 		3C89FC8126B154020050DB40 /* duplicate_xcode_project_target.rb in Resources */ = {isa = PBXBuildFile; fileRef = 3C89FC8026B154020050DB40 /* duplicate_xcode_project_target.rb */; };
-		3C89FC8726B24DDB0050DB40 /* duplicate_xcode_project_target2.rb in Resources */ = {isa = PBXBuildFile; fileRef = 3C89FC8626B24DDB0050DB40 /* duplicate_xcode_project_target2.rb */; };
+		3C8B679D26B390D200D98BDA /* ReProjTools.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C8B679C26B390D200D98BDA /* ReProjTools.swift */; };
+		3C8B679F26B39B3B00D98BDA /* TargetDuplicate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C8B679E26B39B3B00D98BDA /* TargetDuplicate.swift */; };
 		3CE7F2C026B2850700438A59 /* copy_groups.rb in Resources */ = {isa = PBXBuildFile; fileRef = 3CE7F2BF26B2850700438A59 /* copy_groups.rb */; };
 		AE520186D06EB1654A5FA8DD /* Pods_CrownNameTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 43EF4BD5CBB3AC2C30E66DE5 /* Pods_CrownNameTests.framework */; };
 		C2CF09EE628EA279F499D1D7 /* Pods_CrownName_CrownNameUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA7E3BB491A92F2FF274A1CA /* Pods_CrownName_CrownNameUITests.framework */; };
@@ -55,10 +54,9 @@
 		3C78548B26AACBA300AA4693 /* CrownNameUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CrownNameUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3C78548F26AACBA300AA4693 /* CrownNameUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrownNameUITests.swift; sourceTree = "<group>"; };
 		3C78549126AACBA300AA4693 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		3C89E9BF26AF96290050DB40 /* FilesRead.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilesRead.swift; sourceTree = "<group>"; };
-		3C89F30126AFEE280050DB40 /* TargetDuplicate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TargetDuplicate.swift; sourceTree = "<group>"; };
 		3C89FC8026B154020050DB40 /* duplicate_xcode_project_target.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = duplicate_xcode_project_target.rb; sourceTree = "<group>"; };
-		3C89FC8626B24DDB0050DB40 /* duplicate_xcode_project_target2.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = duplicate_xcode_project_target2.rb; sourceTree = "<group>"; };
+		3C8B679C26B390D200D98BDA /* ReProjTools.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReProjTools.swift; sourceTree = "<group>"; };
+		3C8B679E26B39B3B00D98BDA /* TargetDuplicate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TargetDuplicate.swift; sourceTree = "<group>"; };
 		3CE7F2BF26B2850700438A59 /* copy_groups.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = copy_groups.rb; sourceTree = "<group>"; };
 		3CE7F2C526B2A92500438A59 /* CrownName.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = CrownName.entitlements; sourceTree = "<group>"; };
 		43EF4BD5CBB3AC2C30E66DE5 /* Pods_CrownNameTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CrownNameTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -168,11 +166,10 @@
 		3C7854AC26AACC2800AA4693 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				3C8B679E26B39B3B00D98BDA /* TargetDuplicate.swift */,
 				3CE7F2BF26B2850700438A59 /* copy_groups.rb */,
-				3C89FC8626B24DDB0050DB40 /* duplicate_xcode_project_target2.rb */,
 				3C89FC8026B154020050DB40 /* duplicate_xcode_project_target.rb */,
-				3C89E9BF26AF96290050DB40 /* FilesRead.swift */,
-				3C89F30126AFEE280050DB40 /* TargetDuplicate.swift */,
+				3C8B679C26B390D200D98BDA /* ReProjTools.swift */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -299,7 +296,6 @@
 				3C78547926AACBA300AA4693 /* Main.storyboard in Resources */,
 				3C89FC8126B154020050DB40 /* duplicate_xcode_project_target.rb in Resources */,
 				3CE7F2C026B2850700438A59 /* copy_groups.rb in Resources */,
-				3C89FC8726B24DDB0050DB40 /* duplicate_xcode_project_target2.rb in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -428,8 +424,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				3C78547426AACBA100AA4693 /* ViewController.swift in Sources */,
-				3C89F30226AFEE280050DB40 /* TargetDuplicate.swift in Sources */,
-				3C89E9C026AF96290050DB40 /* FilesRead.swift in Sources */,
+				3C8B679F26B39B3B00D98BDA /* TargetDuplicate.swift in Sources */,
+				3C8B679D26B390D200D98BDA /* ReProjTools.swift in Sources */,
 				3C78547226AACBA100AA4693 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
