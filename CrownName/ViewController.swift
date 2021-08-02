@@ -9,62 +9,57 @@ import Cocoa
 import XcodeProj
 
 class ViewController: NSViewController {
+    @IBOutlet var prjectPathTextFiled: NSTextField!
+    @IBOutlet var imagePathTextFiled: NSTextField!
 
-    @IBOutlet weak var prjectPathTextFiled: NSTextField!
-    @IBOutlet weak var imagePathTextFiled: NSTextField!
-    
     @IBOutlet var logTextView: NSTextView!
-    @IBOutlet weak var targetPopupItems: NSPopUpButton!
-    
-    @IBOutlet weak var targetCnName: NSTextField!
-    @IBOutlet weak var targetEnName: NSTextField!
-    @IBOutlet weak var buildIdTextFiled: NSTextField!
-    @IBOutlet weak var colorTextFiled: NSTextField!
-    @IBOutlet weak var appIdTextFiled: NSTextField!
-    @IBOutlet weak var baiduIdTextField: NSTextField!
-    @IBOutlet weak var companyInfoTextField: NSTextField!
-    
-    var projectProperty:ProjVariable = ProjVariable.init()
-    let projTools:ReProjTools = ReProjTools()
-    var logString:String = "------开始冠名------\n"
-    
+    @IBOutlet var targetPopupItems: NSPopUpButton!
+
+    @IBOutlet var targetCnName: NSTextField!
+    @IBOutlet var targetEnName: NSTextField!
+    @IBOutlet var buildIdTextFiled: NSTextField!
+    @IBOutlet var colorTextFiled: NSTextField!
+    @IBOutlet var appIdTextFiled: NSTextField!
+    @IBOutlet var baiduIdTextField: NSTextField!
+    @IBOutlet var companyInfoTextField: NSTextField!
+
+    var projectProperty: ProjVariable = ProjVariable()
+    let projTools: ReProjTools = ReProjTools()
+    var logString: String = "------开始冠名------\n"
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        projTools.logBlock = { str in
+            self.logString = self.logString + str
+            self.showLogInView()
+        }
     }
 
     override var representedObject: Any? {
         didSet {
-        // Update the view, if already loaded.
+            // Update the view, if already loaded.
         }
     }
-    
+
     // MARK: - Tool Methods
-    
+
     func assionToTarget() {
         targetPopupItems.removeAllItems()
         let targets = projTools.readTargets(projectProperty.projectTruePath)
         targetPopupItems.addItems(withTitles: targets)
     }
-    
-    func duplicateTarget(dupBlock:(Bool) -> ()) {
-        if let target = self.projectProperty.newEnNameTarget , target.isEmpty {
-            self.showAlert("请填写Target的英文拼写")
+
+    func duplicateTarget() {
+        if let target = projectProperty.newEnNameTarget, target.isEmpty {
+            showAlert("请填写Target的英文拼写")
             return
         }
-        self.logString = self.logString + "开始Copy  \(self.projectProperty.sourceNameTarget.or("")) \n"
-        self.projTools.execDuplicteTarget(self.projectProperty, execHander: dupBlock)
-//        if isSuccess {
-//            logString = logString + "Copy 成功!\n"
-//        } else {
-//            logString = logString + "Copy 失败!\n"
-//        }
-//        self.logTextView.string = self.logString
+        logString = logString + "开始Copy  \(projectProperty.sourceNameTarget.or("")) \n"
+        projTools.execDuplicteTarget(projectProperty)
     }
-    
-    
+
     // MARK: - Actions
-    
+
     @IBAction func onActionProjectChoose(_ sender: NSButton) {
         let openPanel = NSOpenPanel()
         openPanel.allowsMultipleSelection = false
@@ -72,14 +67,14 @@ class ViewController: NSViewController {
         openPanel.canCreateDirectories = false
         openPanel.canChooseFiles = false
         openPanel.begin { [weak self] (result) -> Void in
-            guard let self = self else { return}
+            guard let self = self else { return }
             if result.rawValue == NSApplication.ModalResponse.OK.rawValue {
-                guard let url = openPanel.url else { return  }
+                guard let url = openPanel.url else { return }
                 self.projectProperty.projectPath = url.path
                 let truePath = url.path + "/" + self.projectProperty.projectName + ".xcodeproj"
                 self.prjectPathTextFiled.stringValue = truePath
                 self.projectProperty.projectTruePath = truePath
-                
+
                 self.logString.append("\(self.projectProperty.projectPath.or("")) \n")
                 self.logString.append("读取项目路径成功！\n")
                 self.logTextView.string = self.logString
@@ -87,7 +82,7 @@ class ViewController: NSViewController {
             }
         }
     }
-    
+
     @IBAction func onActionImages(_ sender: NSButton) {
         let openPanel = NSOpenPanel()
         openPanel.allowsMultipleSelection = false
@@ -95,110 +90,148 @@ class ViewController: NSViewController {
         openPanel.canCreateDirectories = false
         openPanel.canChooseFiles = false
         openPanel.begin { [weak self] (result) -> Void in
-            guard let self = self else { return}
+            guard let self = self else { return }
             if result.rawValue == NSApplication.ModalResponse.OK.rawValue {
-                guard let url = openPanel.url else { return  }
+                guard let url = openPanel.url else { return }
                 self.projectProperty.imagePath = url.path
                 self.imagePathTextFiled.stringValue = url.path
             }
         }
     }
-    
-    
+
     @IBAction func onActionCrownName(_ sender: NSButton) {
+        projectProperty.newEnNameTarget = targetEnName.stringValue
+        projectProperty.sourceNameTarget = targetPopupItems.selectedItem?.title
+        projectProperty.newCnNameTarget = targetCnName.stringValue
+        projectProperty.buildId = buildIdTextFiled.stringValue
+        projectProperty.mainColor = colorTextFiled.stringValue
+        projectProperty.appID = appIdTextFiled.stringValue
+        projectProperty.baiduSkdId = baiduIdTextField.stringValue
+        projectProperty.companyInfo = companyInfoTextField.stringValue
+
         if projectProperty.projectPath.isNone {
-            self.showAlert("请选择项目路径")
+            showAlert("请选择项目路径")
             return
         }
-        self.projectProperty.newEnNameTarget = self.targetEnName.stringValue
-        self.projectProperty.sourceNameTarget = self.targetPopupItems.selectedItem?.title
-        self.projectProperty.newCnNameTarget = targetCnName.stringValue
-        self.projectProperty.buildId = buildIdTextFiled.stringValue
-        self.projectProperty.mainColor = colorTextFiled.stringValue
-        self.projectProperty.appID = appIdTextFiled.stringValue
-        self.projectProperty.baiduSkdId = baiduIdTextField.stringValue
-        self.projectProperty.companyInfo = companyInfoTextField.stringValue
-        
+        if projectProperty.imagePath.isNone {
+            showAlert("请选择图片素材路径")
+            return
+        }
+        if projectProperty.sourceNameTarget.isNone {
+            showAlert("请选择要复制的target")
+            return
+        }
+        if projectProperty.newCnNameTarget.or("").count == 0 {
+            showAlert("请填写应用名称")
+            return
+        }
+        if projectProperty.newEnNameTarget.or("").count == 0 {
+            showAlert("请填写target名称,eg:\(projectProperty.sourceNameTarget.or("DaiShu"))")
+            return
+        }
+        if targetPopupItems.itemTitles.contains(projectProperty.newEnNameTarget.or("")) {
+            showAlert("不能添加重复的冠名")
+            return
+        }
+
+        if projectProperty.buildId.or("").count == 0 {
+            showAlert("请填写buildId,eg:com.fooww.\(projectProperty.sourceNameTarget.or("").lowercased())")
+            return
+        }
+        if projectProperty.mainColor.or("").count == 0 {
+            showAlert("请填写十六进制mainColor,eg:000000")
+            return
+        }
+        if projectProperty.mainColor?.count != 6 {
+            showAlert("请填写6位mainColor,eg:000000")
+            return
+        }
+        if projectProperty.appID.or("").count == 0 {
+            showAlert("请填写App id,eg:702222")
+            return
+        }
+        if projectProperty.appID?.count != 6 {
+            showAlert("请填写6位appID,eg:702222")
+            return
+        }
+        if projectProperty.baiduSkdId.or("").count == 0 {
+            showAlert("请填写百度地图sdk id")
+            return
+        }
+        if projectProperty.companyInfo.or("").count == 0 {
+            showAlert("请填写公司简介")
+            return
+        }
+        beginCrown()
+    }
+
+    func beginCrown() {
         let group = DispatchGroup()
         let serialQueue = DispatchQueue(label: "exec_queue")
 
-//        group.enter()
-//        serialQueue.async {
-//            self.duplicateTarget { suc in
-//                if suc {
-//                    print("11111")
-//                    group.leave()
-//                }
-//            }
-//        }
-//        group.enter()
-//        serialQueue.async {
-//            self.projTools.copySource(self.projectProperty)
-//
-//            self.projTools.deleteTargetFileReference(self.projectProperty) { suc in
-//                if suc {
-//                    print("22222")
-//                    group.leave()
-//                }
-//            }
-//        }
-//                group.enter()
-//                serialQueue.async {
-//                    self.projTools.remResourceFileRef(self.projectProperty) { suc in
-//                        if suc {
-//                            print("44444")
-//                            group.leave()
-//                        }
-//                    }
-//                }
-
-//        group.enter()
-//        serialQueue.async {
-//            self.projTools.addGroupFileReference(vable: self.projectProperty) { suc in
-//                if suc {
-//                    print("3333")
-//                    group.leave()
-//                }
-//            }
-//        }
-        
-//        group.enter()
-//        serialQueue.async {
-//            self.projTools.modifyInfoSettings(self.projectProperty) { suc in
-//                if suc {
-//                    print("66666")
-//                    group.leave()
-//                }
-//            }
-//        }
-//        self.projTools.modifyInfoPlistFile(self.projectProperty)
-//        self.projTools.modifyColorPlistFile(self.projectProperty)
-//        self.projTools.replaceImages(self.projectProperty)
-//        self.projTools.reChooseLaunchStoryBoard(self.projectProperty)
-//        self.projTools.execCocoaPods(self.projectProperty)
-//        group.notify(queue: DispatchQueue.main) {
-//            print("55555")
-//        }
-        
-//        projTools.modifyTargetSettings(projectProperty)
-//        guard let xcodeproj = try? XcodeProj(pathString: projectProperty.projectTruePath) else { return  }
-//        projTools.deleteTargetFileReference(xcodeproj, targetName: projectProperty.newEnNameTarget.or(""))
-//
-//        projTools.copySource(projectProperty)
-//        projTools.addGroupFileReference(vable:projectProperty)
-//
-//        projTools.addResourceFileRef(xcodeproj, vable: projectProperty)
-
-        
-
+        group.enter()
+        serialQueue.async {
+            self.duplicateTarget()
+            group.leave()
+        }
+        group.enter()
+        serialQueue.async {
+            self.projTools.remResourceFileRef(self.projectProperty)
+            group.leave()
+        }
+        group.enter()
+        serialQueue.async {
+            self.projTools.copySource(self.projectProperty)
+            group.leave()
+        }
+        group.enter()
+        serialQueue.async {
+            self.projTools.addGroupFileReference(vable: self.projectProperty)
+            group.leave()
+        }
+        group.enter()
+        serialQueue.async {
+            self.projTools.modifyInfoSettings(self.projectProperty)
+            group.leave()
+        }
+        group.enter()
+        serialQueue.async {
+            self.projTools.modifyInfoPlistFile(self.projectProperty)
+            group.leave()
+        }
+        group.enter()
+        serialQueue.async {
+            self.projTools.modifyColorPlistFile(self.projectProperty)
+            group.leave()
+        }
+        group.enter()
+        serialQueue.async {
+            self.projTools.replaceImages(self.projectProperty)
+            group.leave()
+        }
+        group.enter()
+        serialQueue.async {
+            self.projTools.reChooseLaunchStoryBoard(self.projectProperty)
+            group.leave()
+        }
+        group.enter()
+        serialQueue.async {
+            self.projTools.execCocoaPods(self.projectProperty)
+            group.leave()
+        }
+        logString.append("------冠名结束------\n")
     }
-    
-    
-    func showAlert(_ message:String) {
-        let alert = NSAlert.init()
+
+    func showLogInView() {
+        logString.append("\n")
+        DispatchQueue.main.async {
+            self.logTextView.string = self.logString
+        }
+    }
+
+    func showAlert(_ message: String) {
+        let alert = NSAlert()
         alert.messageText = message
         alert.runModal()
     }
-    
 }
-
