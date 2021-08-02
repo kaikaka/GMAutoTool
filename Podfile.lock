@@ -1,7 +1,6 @@
 PODS:
   - AEXML (4.6.0)
   - CommandLineKit (2.3.0)
-  - Fuzi (3.1.3)
   - PathKit (1.0.0)
   - xcodeproj (8.0.0):
     - AEXML (~> 4.6.0)
@@ -9,7 +8,6 @@ PODS:
 
 DEPENDENCIES:
   - CommandLineKit
-  - Fuzi (from `https://hub.fastgit.org/cezheng/Fuzi`)
   - PathKit
   - xcodeproj
 
@@ -20,22 +18,12 @@ SPEC REPOS:
     - PathKit
     - xcodeproj
 
-EXTERNAL SOURCES:
-  Fuzi:
-    :git: https://hub.fastgit.org/cezheng/Fuzi
-
-CHECKOUT OPTIONS:
-  Fuzi:
-    :commit: f08c8323da21e985f3772610753bcfc652c2103f
-    :git: https://hub.fastgit.org/cezheng/Fuzi
-
 SPEC CHECKSUMS:
   AEXML: 2fbb73d8724797ed2cde888731e176fa4d44dd83
   CommandLineKit: 559e1c22ddf26b6224b398a1b3db12d2ce796182
-  Fuzi: 4c10d6449c0b49a85cd75b13844c559c0fc71220
   PathKit: 364e0de7fb5adb142aecab4e112187e5548fc4b6
   xcodeproj: 83dc5550d7cf42a34b030eaa2c86f8223e9fbb79
 
-PODFILE CHECKSUM: eb504974395f1b8e6cfaeb5254f48a494c880142
+PODFILE CHECKSUM: fea93d6cbb4b49e25c2fa946220105fae4388d55
 
 COCOAPODS: 1.10.0

@@ -15,6 +15,9 @@ let GUANMING_TEMP_SCRNAME = "GUANMING-TEMP-SCRNAME"
 
 /// 冠名相关方法
 class ReProjTools: NSObject {
+    ///打印日志
+    var logBlock:((String) -> Void)?
+    
     /// 静态方法 方便之后脚本调用
     static func shell(launchPath path: String, arguments args: [String]) -> (String, Int) {
         let task = Process()
@@ -337,18 +340,42 @@ class ReProjTools: NSObject {
             try newReadString.write(to: URL(string: "file://\(gToPath)/Contents.json")!, atomically: true, encoding: String.Encoding.utf8)
         } catch {}
     }
-    
-    func reChooseLaunchStoryBoard(_ vable: ProjVariable) {
-        do {
-            let sbPath = vable.projectPath.or("") + "/Foowwphone/Assets/\(vable.newEnNameTarget.or(""))/Only.xcassets/Launch Screen.storyboard"
-            let fileManager = FileManager.default
-            let sbData = try String.init(contentsOf: URL.init(fileURLWithPath: "file://\(sbPath)"))
-            let data = fileManager.contents(atPath: sbPath)!
-            let readString = String(data: data, encoding: String.Encoding.utf8)
 
-            let newReadString = readString!.replacingOccurrences(of: "bg_splash_\(vable.sourceNameTarget.or(""))", with: "bg_splash_\(vable.newEnNameTarget.or(""))")
-            try newReadString.write(to: URL(string: "file://\(sbPath)")!, atomically: true, encoding: String.Encoding.utf8)
-        } catch {}
+    ///修改Launch 图片名字
+    func reChooseLaunchStoryBoard(_ vable: ProjVariable) {
+        let sbPath = vable.projectPath.or("") + "/Foowwphone/Assets/\(vable.newEnNameTarget.or(""))"
+        let fileBundle = Bundle(path: sbPath)
+        guard let url = fileBundle?.url(forResource: "Launch Screen", withExtension: "storyboard") else { return }
+        let readString = try? String(contentsOf: url, encoding: String.Encoding.utf8)
+        let newReadString = readString!.replacingOccurrences(of: "bg_splash_\(vable.sourceNameTarget.or("").lowercased())", with: "bg_splash_\(vable.newEnNameTarget.or("").lowercased())")
+        let error: ()? = try? newReadString.write(to: url, atomically: true, encoding: String.Encoding.utf8)
+        if let er = error {
+            if er == () {
+            }
+        } else if error == nil {
+        }
+    }
+    
+    func execCocoaPods(_ vable: ProjVariable) {
+        let podFilePath = vable.projectPath.or("")
+        let fileBundle = Bundle(path: podFilePath)
+        guard let url = fileBundle?.url(forResource: "Podfile", withExtension: "") else { return }
+        let readString = try? String(contentsOf: url, encoding: String.Encoding.utf8)
+        let newReadString = readString!.replacingOccurrences(of: "end\nend\n", with: "end\n  target \'\(vable.newEnNameTarget.or(""))\' do\n  end\nend\n")
+        let error: ()? = try? newReadString.write(to: url, atomically: true, encoding: String.Encoding.utf8)
+        if let er = error {
+            if er == () {
+                //执行pods命令
+                let res = ReProjTools.shell(launchPath: "/usr/local/bin/pod", arguments: ["install","--project-directory=\(podFilePath)"])
+                if res.1 == 0 {
+                    print("Exec Success")
+
+                }
+            }
+        } else if error == nil {
+        }
+//        let res1 = ReProjTools.shell(launchPath: "/usr/bin/cd", arguments: [podFilePath])
+//        print(res1)
     }
     
     /// 替换ruby 变量

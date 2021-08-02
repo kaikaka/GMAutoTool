@@ -174,7 +174,8 @@ class ViewController: NSViewController {
 //        self.projTools.modifyInfoPlistFile(self.projectProperty)
 //        self.projTools.modifyColorPlistFile(self.projectProperty)
 //        self.projTools.replaceImages(self.projectProperty)
-        self.projTools.reChooseLaunchStoryBoard(self.projectProperty)
+//        self.projTools.reChooseLaunchStoryBoard(self.projectProperty)
+//        self.projTools.execCocoaPods(self.projectProperty)
 //        group.notify(queue: DispatchQueue.main) {
 //            print("55555")
 //        }

@@ -1,6 +1,5 @@
 ${PODS_ROOT}/Target Support Files/Pods-CrownName/Pods-CrownName-frameworks.sh
 ${BUILT_PRODUCTS_DIR}/AEXML/AEXML.framework
 ${BUILT_PRODUCTS_DIR}/CommandLineKit/CommandLineKit.framework
-${BUILT_PRODUCTS_DIR}/Fuzi/Fuzi.framework
 ${BUILT_PRODUCTS_DIR}/PathKit/PathKit.framework
 ${BUILT_PRODUCTS_DIR}/xcodeproj/XcodeProj.framework
