@@ -180,9 +180,9 @@ class ReProjTools: NSObject {
             if buildConfigurations.buildSettings[keyIdentifier] != nil {
                 let setsValue = buildConfigurations.buildSettings[keyIdentifier]
                 if let buildId = setsValue as? String, buildId.contains("com.fooww") {
-                    buildConfigurations.buildSettings[keyIdentifier] = "com.fooww.\(vable.buildId.or(""))"
-                } else {
                     buildConfigurations.buildSettings[keyIdentifier] = vable.buildId.or(_:)
+                } else {
+                    buildConfigurations.buildSettings[keyIdentifier] = "com.fooww.\(vable.buildId.or(""))"
                 }
                 blockExec("修改bundle id~")
             }
@@ -338,7 +338,7 @@ class ReProjTools: NSObject {
             }
 
             toPath = toPath.replacingOccurrences(of: oldTargetName, with: newTargetName)
-            newImgName = "ios-bg_splash -2@3x.png"
+            newImgName = "ios-bg_splash -2@2x.png"
             let fromPath = "\(vable.imagePath.or(""))/\(newImgName)"
             // 移动图片到新目录下
             try fileManager.moveItem(atPath: fromPath, toPath: toPath)
@@ -369,7 +369,8 @@ class ReProjTools: NSObject {
             blockExec("修改bg_splash失败~")
         }
     }
-
+    
+    ///执行pod命令
     func execCocoaPods(_ vable: ProjVariable) {
         let podFilePath = vable.projectPath.or("")
         let fileBundle = Bundle(path: podFilePath)
