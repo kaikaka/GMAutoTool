@@ -6,8 +6,8 @@
 //
 
 import Cocoa
-import XcodeProj
 import PathKit
+import XcodeProj
 
 let GUANMING_TEMP_ROOTNAME = "GUANMING-TEMP-ROOTNAME"
 let GUANMING_TEMP_PATH = "GUANMING-TEMP-PATH"
@@ -15,7 +15,6 @@ let GUANMING_TEMP_SCRNAME = "GUANMING-TEMP-SCRNAME"
 
 /// 冠名相关方法
 class ReProjTools: NSObject {
-    
     /// 静态方法 方便之后脚本调用
     static func shell(launchPath path: String, arguments args: [String]) -> (String, Int) {
         let task = Process()
@@ -33,15 +32,15 @@ class ReProjTools: NSObject {
 
         return (output!, Int(task.terminationStatus))
     }
-    
-    ///读取项目所有的Targets
-    func readTargets(_ path:String) -> [String] {
+
+    /// 读取项目所有的Targets
+    func readTargets(_ path: String) -> [String] {
         guard let xcodeproj = try? XcodeProj(pathString: path) else { return [] }
-        
+
         let targets = xcodeproj.pbxproj.nativeTargets.compactMap { target in
             target.name
         }
-        
+
         let filterTargets = targets.compactMap { target -> String? in
             if target.contains("Foowwphone") || target.contains("DaiShu") {
                 return nil
@@ -50,11 +49,11 @@ class ReProjTools: NSObject {
         }
         return filterTargets
     }
-    
-    ///执行复制Target脚本
-    func execDuplicteTarget(_ vable:ProjVariable, execHander:(Bool) -> ()) {
-        guard let rb = Bundle.main.path(forResource: "duplicate_xcode_project_target", ofType: "rb") else { return  }
-        if self.replaceTargetValue(vable, rb: rb) {
+
+    /// 执行复制Target脚本
+    func execDuplicteTarget(_ vable: ProjVariable, execHander: (Bool) -> Void) {
+        guard let rb = Bundle.main.path(forResource: "duplicate_xcode_project_target", ofType: "rb") else { return }
+        if replaceTargetValue(vable, rb: rb) {
             // 1.读取脚本目录 path 脚本目录
             // 2.launchPath 要执行的脚本路径，ruby\/bin/ls
             let res = ReProjTools.shell(launchPath: "/usr/bin/ruby", arguments: [rb])
@@ -69,27 +68,27 @@ class ReProjTools: NSObject {
             execHander(false)
         }
     }
-    
-    ///修改target相关
-    func modifyTargetSettings(_ vable:ProjVariable) {
-        //1.删除索引
-        //2.复制文件夹，并添加目录
-        //3.添加索引
-        //4.修改Build Settings
-        guard let xcodeproj = try? XcodeProj(pathString: vable.projectTruePath) else { return  }
-        
+
+    /// 修改target相关
+    func modifyTargetSettings(_ vable: ProjVariable) {
+        // 1.删除索引
+        // 2.复制文件夹，并添加目录
+        // 3.添加索引
+        // 4.修改Build Settings
+        guard let xcodeproj = try? XcodeProj(pathString: vable.projectTruePath) else { return }
+
 //        deleteTargetFileReference(xcodeproj, targetName: vable.newEnNameTarget.or(""))
-        
+
 //        copySource(vable)
 //        addGroupFileReference(vable: vable)
 //
 //        addResourceFileRef(xcodeproj, vable: vable)
-        
+
 //        try? xcodeproj.write(pathString: vable.projectTruePath, override: true)
     }
-    
-    ///复制实际文件
-    func copySource(_ vable:ProjVariable) {
+
+    /// 复制实际文件
+    func copySource(_ vable: ProjVariable) {
         do {
             let toPath = "\(vable.projectPath.or(""))/Foowwphone/Assets/\(vable.newEnNameTarget.or(""))"
             let fromPath = "\(vable.projectPath.or(""))/Foowwphone/Assets/\(vable.sourceNameTarget.or(""))"
@@ -103,9 +102,9 @@ class ReProjTools: NSObject {
 
         } catch {}
     }
-    
-    ///添加项目目录索引
-    func addGroupFileReference(vable:ProjVariable,finish:(Bool) -> Void) {
+
+    /// 添加项目目录索引
+    func addGroupFileReference(vable: ProjVariable, finish: (Bool) -> Void) {
         guard let rb = Bundle.main.path(forResource: "copy_groups", ofType: "rb") else { return }
         let fileManager = FileManager.default
         if let url = URL(string: rb) {
@@ -135,17 +134,17 @@ class ReProjTools: NSObject {
             }
         }
     }
-    
-    ///移除Frameworks、 Resources 索引
-    func remResourceFileRef(_ vable:ProjVariable,finish:(Bool) -> Void) {
-        guard let xcodeproj = try? XcodeProj(pathString: vable.projectTruePath) else { return  }
+
+    /// 移除Frameworks、 Resources 索引
+    func remResourceFileRef(_ vable: ProjVariable, finish: (Bool) -> Void) {
+        guard let xcodeproj = try? XcodeProj(pathString: vable.projectTruePath) else { return }
         guard let target = xcodeproj.pbxproj.nativeTargets.compactMap({ target -> PBXNativeTarget? in
             if target.name == vable.newEnNameTarget {
                 return target
             }
             return nil
         }).first else { return }
-        
+
         for file in target.buildPhases {
             if file.name() == "Frameworks" {
                 if let files = file.files, files.count < 10 {
@@ -155,7 +154,7 @@ class ReProjTools: NSObject {
             }
         }
         let error: ()? = try? xcodeproj.write(pathString: vable.projectTruePath, override: true)
-        if let er = error,er == () {
+        if let er = error, er == () {
             finish(true)
         } else if error == nil {
             finish(true)
@@ -163,9 +162,9 @@ class ReProjTools: NSObject {
             finish(false)
         }
     }
-    
-    ///修改project 配置
-    func modifyInfoSettings(_ vable:ProjVariable,finish:(Bool) -> Void) {
+
+    /// 修改project 配置
+    func modifyInfoSettings(_ vable: ProjVariable, finish: (Bool) -> Void) {
         guard let xcodeproj = try? XcodeProj(pathString: vable.projectTruePath) else { return }
         var target: PBXNativeTarget!
         for item in xcodeproj.pbxproj.nativeTargets {
@@ -178,12 +177,11 @@ class ReProjTools: NSObject {
         let keyIdentifier = "PRODUCT_BUNDLE_IDENTIFIER"
         let infoPath = "INFOPLIST_FILE"
         let marcors = "GCC_PREPROCESSOR_DEFINITIONS"
-        
+
         for buildConfigurations in buildConfigurationList.buildConfigurations {
-            
             if buildConfigurations.buildSettings[keyIdentifier] != nil {
                 let setsValue = buildConfigurations.buildSettings[keyIdentifier]
-                if let buildId = setsValue as? String,buildId.contains("com.fooww") {
+                if let buildId = setsValue as? String, buildId.contains("com.fooww") {
                     buildConfigurations.buildSettings[keyIdentifier] = "com.fooww.\(vable.buildId.or(""))"
                 } else {
                     buildConfigurations.buildSettings[keyIdentifier] = vable.buildId.or(_:)
@@ -191,7 +189,7 @@ class ReProjTools: NSObject {
             }
             if buildConfigurations.buildSettings[infoPath] != nil {
                 let setsValue = buildConfigurations.buildSettings[infoPath]
-                if let info = setsValue as? String,info.contains("Foowwphone") {
+                if let info = setsValue as? String, info.contains("Foowwphone") {
                     buildConfigurations.buildSettings[infoPath] = "Foowwphone/Assets/\(vable.newEnNameTarget.or(""))/Info.plist"
                 }
             }
@@ -203,7 +201,7 @@ class ReProjTools: NSObject {
             }
         }
         let error: ()? = try? xcodeproj.write(pathString: vable.projectTruePath, override: true)
-        if let er = error,er == () {
+        if let er = error, er == () {
             finish(true)
         } else if error == nil {
             finish(true)
@@ -211,13 +209,13 @@ class ReProjTools: NSObject {
             finish(false)
         }
     }
-    
-    ///修改info.plist文件
-    func modifyInfoPlistFile(_ vable:ProjVariable) {
+
+    /// 修改info.plist文件
+    func modifyInfoPlistFile(_ vable: ProjVariable) {
         let infoUpPath = vable.projectPath.or("") + "/Foowwphone/Assets/\(vable.newEnNameTarget.or(""))"
-        let fileBundle = Bundle.init(path: infoUpPath)
+        let fileBundle = Bundle(path: infoUpPath)
         let newPath = (fileBundle?.path(forResource: "Info", ofType: "plist"))!
-        
+
         if let colorDict = NSDictionary(contentsOfFile: newPath) as? NSMutableDictionary {
             colorDict["AppAbstract"] = vable.companyInfo
             colorDict["FWSoftID"] = vable.appID
@@ -227,22 +225,134 @@ class ReProjTools: NSObject {
             print(error)
         }
     }
-    
-    ///修改颜色配置
-    func modifyColorPlistFile(_ vable:ProjVariable) {
+
+    /// 修改颜色配置
+    func modifyColorPlistFile(_ vable: ProjVariable) {
         let colorPath = vable.projectPath.or("") + "/Foowwphone/Assets/\(vable.newEnNameTarget.or(""))"
-        let fileBundle = Bundle.init(path: colorPath)
+        let fileBundle = Bundle(path: colorPath)
         let newPath = (fileBundle?.path(forResource: "ColorConfig", ofType: "plist"))!
-        
+
         if let colorDict = NSDictionary(contentsOfFile: newPath) as? NSMutableDictionary {
             colorDict["mainColor"] = vable.mainColor
             let error = colorDict.write(toFile: newPath, atomically: true)
             print(error)
         }
     }
+
+    /// 替换图片
+    func replaceImages(_ vable: ProjVariable) {
+        let imagePath = vable.projectPath.or("") + "/Foowwphone/Assets/\(vable.newEnNameTarget.or(""))/Only.xcassets"
+
+        func findImg(_ newPath: String, imgName: String) {
+            guard let arrays = FileManager.default.enumerator(atPath: vable.imagePath.or("")) else { return }
+
+            let hadImg = arrays.allObjects.contains { res in
+                if imgName == "1024x1024pt.png"
+                    || imgName == "icon_mobile_mark@2x.png"
+                    || imgName == "icon_mobile_mark@3x.png" || imgName.contains("bg_splash") {
+                    return true
+                }
+                if let v = res as? String {
+                    return v == imgName
+                }
+                return false
+            }
+
+            if hadImg {
+                do {
+                    let toPath = newPath
+                    var newImgName = imgName
+                    if imgName == "1024x1024pt.png" {
+                        newImgName = "1024x1024pt@2x.png"
+                    } else if imgName == "icon_mobile_mark@2x.png" {
+                        newImgName = "icon_android_phone_log@2x.png"
+                    } else if imgName == "icon_mobile_mark@3x.png" {
+                        newImgName = "icon_android_phone_log@3x.png"
+                    } else if imgName.contains("bg_splash_\(vable.sourceNameTarget.or("").lowercased())") {
+                        replaceImgJson(vable, aPath: toPath, aImgName: newImgName)
+                    }
+
+                    let fromPath = "\(vable.imagePath.or(""))/\(newImgName)"
+
+                    let fileManager = FileManager.default
+                    if fileManager.fileExists(atPath: toPath) {
+                        try fileManager.removeItem(atPath: toPath)
+                    }
+
+                    try fileManager.copyItem(atPath: fromPath, toPath: toPath)
+
+                } catch {}
+            }
+        }
+
+        guard let arrays = FileManager.default.enumerator(atPath: imagePath) else { return }
+        for obj in arrays.allObjects {
+            if let value = obj as? String, value.contains(".png") {
+                let newImagePath = imagePath + "/" + value
+                if let imgName = newImagePath.split(separator: "/").last {
+                    findImg(newImagePath, imgName: String(imgName))
+                }
+            }
+        }
+    }
+
+    private func replaceImgJson(_ vable: ProjVariable, aPath: String, aImgName: String) {
+        do {
+            var toPath = aPath
+            var newImgName = aImgName
+            let oldTargetName = vable.sourceNameTarget.or("").lowercased()
+            let newTargetName = vable.newEnNameTarget.or("").lowercased()
+
+            var gPathArrays = toPath.split(separator: "/")
+            gPathArrays.removeLast()
+            let gPath = gPathArrays.joined(separator: "/")
+            gPathArrays.removeLast()
+            let gToPath = gPathArrays.joined(separator: "/") + "/bg_splash_\(newTargetName).imageset"
+            let fileManager = FileManager.default
+            //如果不存在新文件夹 复制一份
+            if !fileManager.fileExists(atPath: gToPath) {
+                try fileManager.copyItem(atPath: gPath, toPath: gToPath)
+            }
+            //删除旧文件夹
+            if fileManager.fileExists(atPath: gPath) {
+                try fileManager.removeItem(atPath: gPath)
+            }
+
+            let oldTargetImgName = gToPath + "/bg_splash_\(oldTargetName).png"
+            //删除旧的bg_splash图片
+            if fileManager.fileExists(atPath: oldTargetImgName) {
+                try fileManager.removeItem(atPath: oldTargetImgName)
+            }
+
+            toPath = toPath.replacingOccurrences(of: oldTargetName, with: newTargetName)
+            newImgName = "ios-bg_splash -2@3x.png"
+            let fromPath = "\(vable.imagePath.or(""))/\(newImgName)"
+            //移动图片到新目录下
+            try fileManager.moveItem(atPath: fromPath, toPath: toPath)
+            
+            //修改配置文件
+            let data = fileManager.contents(atPath: gToPath + "/Contents.json")!
+            let readString = String(data: data, encoding: String.Encoding.utf8)
+            let newReadString = readString!.replacingOccurrences(of: "boan", with: newTargetName)
+            try newReadString.write(to: URL(string: "file://\(gToPath)/Contents.json")!, atomically: true, encoding: String.Encoding.utf8)
+        } catch {}
+    }
     
-    ///替换ruby 变量
-    func replaceTargetValue(_ vable: ProjVariable,rb:String) -> Bool {
+    func reChooseLaunchStoryBoard(_ vable: ProjVariable) {
+        do {
+            let sbPath = vable.projectPath.or("") + "/Foowwphone/Assets/\(vable.newEnNameTarget.or(""))/Only.xcassets/Launch Screen.storyboard"
+            let fileManager = FileManager.default
+            let sbData = try String.init(contentsOf: URL.init(fileURLWithPath: "file://\(sbPath)"))
+            let data = fileManager.contents(atPath: sbPath)!
+            let readString = String(data: data, encoding: String.Encoding.utf8)
+
+            let newReadString = readString!.replacingOccurrences(of: "bg_splash_\(vable.sourceNameTarget.or(""))", with: "bg_splash_\(vable.newEnNameTarget.or(""))")
+            try newReadString.write(to: URL(string: "file://\(sbPath)")!, atomically: true, encoding: String.Encoding.utf8)
+        } catch {}
+    }
+    
+    /// 替换ruby 变量
+    func replaceTargetValue(_ vable: ProjVariable, rb: String) -> Bool {
         let fileManager = FileManager.default
         if let url = URL(string: rb) {
             if fileManager.fileExists(atPath: url.path) {
@@ -269,32 +379,31 @@ class ReProjTools: NSObject {
     }
 }
 
-
 struct ProjVariable {
-    ///项目路径
-    var projectPath:String?
-    ///附带.xcodeproj的路径
-    var projectTruePath:String = ""
-    ///项目名称，默认Foowwphone
-    let projectName:String = "Foowwphone"
-    ///冠名图片路径
-    var imagePath:String?
-    ///要复制的冠名Target
-    var sourceNameTarget:String?
-    ///新的应用名称(中文)
-    var newCnNameTarget:String?
-    ///新的应用名称(英文)
-    var newEnNameTarget:String?
+    /// 项目路径
+    var projectPath: String?
+    /// 附带.xcodeproj的路径
+    var projectTruePath: String = ""
+    /// 项目名称，默认Foowwphone
+    let projectName: String = "Foowwphone"
+    /// 冠名图片路径
+    var imagePath: String?
+    /// 要复制的冠名Target
+    var sourceNameTarget: String?
+    /// 新的应用名称(中文)
+    var newCnNameTarget: String?
+    /// 新的应用名称(英文)
+    var newEnNameTarget: String?
     /// 冠名Build Id
-    var buildId:String?
+    var buildId: String?
     /// 冠名颜色，十六位颜色字符串
-    var mainColor:String?
+    var mainColor: String?
     /// FwSoftId,冠名公司Id
-    var appID:String?
+    var appID: String?
     /// 百度地图开发中心akid
-    var baiduSkdId:String?
+    var baiduSkdId: String?
     /// 公司简介
-    var companyInfo:String?
+    var companyInfo: String?
 }
 
 extension Optional {
@@ -326,7 +435,7 @@ extension Optional {
         guard let unwrapped = self else { throw exception }
         return unwrapped
     }
-    
+
     /// 可选值为空的时候返回 true
     public var isNone: Bool {
         switch self {

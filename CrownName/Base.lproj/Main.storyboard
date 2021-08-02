@@ -272,6 +272,9 @@
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
+                                <connections>
+                                    <action selector="onActionImages:" target="XfG-lQ-9wD" id="wrC-Sy-Rfz"/>
+                                </connections>
                             </button>
                             <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="UVp-vS-Sjp">
                                 <rect key="frame" x="79" y="485" width="297" height="25"/>
@@ -361,6 +364,7 @@
                         <outlet property="buildIdTextFiled" destination="Reg-kG-Xyi" id="INz-6c-CpF"/>
                         <outlet property="colorTextFiled" destination="2gi-CJ-GNE" id="NwZ-lQ-VAK"/>
                         <outlet property="companyInfoTextField" destination="VUG-BV-wiF" id="6GQ-K8-Epv"/>
+                        <outlet property="imagePathTextFiled" destination="9eG-St-wdq" id="ufI-4x-K9E"/>
                         <outlet property="logTextView" destination="HW5-hT-4B1" id="Zzp-bQ-QCC"/>
                         <outlet property="prjectPathTextFiled" destination="7S8-vF-8mc" id="kGw-VI-Xz4"/>
                         <outlet property="targetCnName" destination="szw-nw-VJm" id="uhF-cm-4mi"/>

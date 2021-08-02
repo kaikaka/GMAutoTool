@@ -11,6 +11,8 @@ import XcodeProj
 class ViewController: NSViewController {
 
     @IBOutlet weak var prjectPathTextFiled: NSTextField!
+    @IBOutlet weak var imagePathTextFiled: NSTextField!
+    
     @IBOutlet var logTextView: NSTextView!
     @IBOutlet weak var targetPopupItems: NSPopUpButton!
     
@@ -86,6 +88,23 @@ class ViewController: NSViewController {
         }
     }
     
+    @IBAction func onActionImages(_ sender: NSButton) {
+        let openPanel = NSOpenPanel()
+        openPanel.allowsMultipleSelection = false
+        openPanel.canChooseDirectories = true
+        openPanel.canCreateDirectories = false
+        openPanel.canChooseFiles = false
+        openPanel.begin { [weak self] (result) -> Void in
+            guard let self = self else { return}
+            if result.rawValue == NSApplication.ModalResponse.OK.rawValue {
+                guard let url = openPanel.url else { return  }
+                self.projectProperty.imagePath = url.path
+                self.imagePathTextFiled.stringValue = url.path
+            }
+        }
+    }
+    
+    
     @IBAction func onActionCrownName(_ sender: NSButton) {
         if projectProperty.projectPath.isNone {
             self.showAlert("请选择项目路径")
@@ -152,8 +171,10 @@ class ViewController: NSViewController {
 //                }
 //            }
 //        }
-        self.projTools.modifyInfoPlistFile(self.projectProperty)
+//        self.projTools.modifyInfoPlistFile(self.projectProperty)
 //        self.projTools.modifyColorPlistFile(self.projectProperty)
+//        self.projTools.replaceImages(self.projectProperty)
+        self.projTools.reChooseLaunchStoryBoard(self.projectProperty)
 //        group.notify(queue: DispatchQueue.main) {
 //            print("55555")
 //        }
@@ -170,6 +191,7 @@ class ViewController: NSViewController {
         
 
     }
+    
     
     func showAlert(_ message:String) {
         let alert = NSAlert.init()
