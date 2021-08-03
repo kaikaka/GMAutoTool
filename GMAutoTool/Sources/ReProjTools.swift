@@ -131,7 +131,7 @@ class ReProjTools: NSObject {
         }
     }
 
-    /// 移除Frameworks 索引
+    /// 移除Frameworks 和 多余的Launch Screen.storyboard 索引
     func remResourceFileRef(_ vable: ProjVariable) {
         guard let xcodeproj = try? XcodeProj(pathString: vable.projectTruePath) else { return }
         guard let target = xcodeproj.pbxproj.nativeTargets.compactMap({ target -> PBXNativeTarget? in
@@ -148,6 +148,18 @@ class ReProjTools: NSObject {
                     target.buildPhases.remove(at: idx)
                 }
             }
+            if file.name() == "Resources" {
+                if var files = file.files, files.count > 10 {
+                    for item in files {
+                        if let path = item.file?.path,path == "Launch Screen.storyboard" {
+                            let idx = files.firstIndex(of: item) ?? 0
+                            files.remove(at: idx)
+                        }
+                    }
+                    file.files = files
+                }
+            }
+            
         }
         let error: ()? = try? xcodeproj.write(pathString: vable.projectTruePath, override: true)
         if let er = error, er == () {
@@ -459,4 +471,15 @@ extension Optional {
             return false
         }
     }
+}
+
+extension NSScrollView {
+    public
+    func scrollToBottom() {
+        if let documentView = self.documentView {
+            let maxHeight = max(bounds.height, documentView.bounds.height)
+            documentView.scroll(NSPoint(x: 0, y: maxHeight))
+        }
+    }
+    
 }

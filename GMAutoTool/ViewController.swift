@@ -13,7 +13,8 @@ class ViewController: NSViewController {
 
     @IBOutlet var logTextView: NSTextView!
     @IBOutlet var targetPopupItems: NSPopUpButton!
-
+    @IBOutlet weak var scrollView: NSScrollView!
+    
     @IBOutlet var targetCnName: NSTextField!
     @IBOutlet var targetEnName: NSTextField!
     @IBOutlet var colorTextFiled: NSTextField!
@@ -52,7 +53,8 @@ class ViewController: NSViewController {
             showAlert("请填写Target的英文拼写")
             return
         }
-        logString = logString + "开始Copy  \(projectProperty.sourceNameTarget.or("")) \n"
+        logString = logString + "开始Copy  \(projectProperty.sourceNameTarget.or(""))"
+        showLogInView()
         projTools.execDuplicteTarget(projectProperty)
     }
 
@@ -209,11 +211,9 @@ class ViewController: NSViewController {
         group.enter()
         serialQueue.async {
             self.projTools.execCocoaPods(self.projectProperty)
+            self.logString.append("------冠名结束------\n")
             group.leave()
             
-        }
-        group.notify(queue: DispatchQueue.main) {
-            self.logString.append("------冠名结束------\n")
         }
     }
 
@@ -221,6 +221,7 @@ class ViewController: NSViewController {
         logString.append("\n")
         DispatchQueue.main.async {
             self.logTextView.string = self.logString
+            self.scrollView.scrollToBottom()
         }
     }
 

@@ -444,6 +444,7 @@
                         <outlet property="imagePathTextFiled" destination="9eG-St-wdq" id="ufI-4x-K9E"/>
                         <outlet property="logTextView" destination="HW5-hT-4B1" id="Zzp-bQ-QCC"/>
                         <outlet property="prjectPathTextFiled" destination="7S8-vF-8mc" id="kGw-VI-Xz4"/>
+                        <outlet property="scrollView" destination="EBM-P2-mwg" id="KFc-NA-8pX"/>
                         <outlet property="targetCnName" destination="szw-nw-VJm" id="uhF-cm-4mi"/>
                         <outlet property="targetEnName" destination="U0P-3E-B6R" id="pSD-Ny-MGN"/>
                         <outlet property="targetPopupItems" destination="UVp-vS-Sjp" id="Ush-WV-3ul"/>
