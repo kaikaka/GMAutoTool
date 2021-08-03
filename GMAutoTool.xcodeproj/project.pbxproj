@@ -11,7 +11,6 @@
 		3C78547426AACBA100AA4693 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C78547326AACBA100AA4693 /* ViewController.swift */; };
 		3C78547626AACBA300AA4693 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3C78547526AACBA300AA4693 /* Assets.xcassets */; };
 		3C78547926AACBA300AA4693 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3C78547726AACBA300AA4693 /* Main.storyboard */; };
-		3C894D2826B8DEE20069218E /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 3C894D2726B8DEE20069218E /* README.md */; };
 		3C89FC8126B154020050DB40 /* duplicate_xcode_project_target.rb in Resources */ = {isa = PBXBuildFile; fileRef = 3C89FC8026B154020050DB40 /* duplicate_xcode_project_target.rb */; };
 		3C8B679D26B390D200D98BDA /* ReProjTools.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C8B679C26B390D200D98BDA /* ReProjTools.swift */; };
 		3CE7F2C026B2850700438A59 /* copy_groups.rb in Resources */ = {isa = PBXBuildFile; fileRef = 3CE7F2BF26B2850700438A59 /* copy_groups.rb */; };
@@ -47,7 +46,6 @@
 		3C78547A26AACBA300AA4693 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3C78548026AACBA300AA4693 /* GMAutoToolTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GMAutoToolTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3C78548B26AACBA300AA4693 /* GMAutoToolUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GMAutoToolUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		3C894D2726B8DEE20069218E /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		3C894D3426B8E5620069218E /* GMAutoTool.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = GMAutoTool.entitlements; sourceTree = "<group>"; };
 		3C89FC8026B154020050DB40 /* duplicate_xcode_project_target.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = duplicate_xcode_project_target.rb; sourceTree = "<group>"; };
 		3C8B679C26B390D200D98BDA /* ReProjTools.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReProjTools.swift; sourceTree = "<group>"; };
@@ -140,7 +138,6 @@
 		3C7854AC26AACC2800AA4693 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				3C894D2726B8DEE20069218E /* README.md */,
 				3CE7F2BF26B2850700438A59 /* copy_groups.rb */,
 				3C89FC8026B154020050DB40 /* duplicate_xcode_project_target.rb */,
 				3C8B679C26B390D200D98BDA /* ReProjTools.swift */,
@@ -268,7 +265,6 @@
 			files = (
 				3C78547626AACBA300AA4693 /* Assets.xcassets in Resources */,
 				3C78547926AACBA300AA4693 /* Main.storyboard in Resources */,
-				3C894D2826B8DEE20069218E /* README.md in Resources */,
 				3C89FC8126B154020050DB40 /* duplicate_xcode_project_target.rb in Resources */,
 				3CE7F2C026B2850700438A59 /* copy_groups.rb in Resources */,
 			);
