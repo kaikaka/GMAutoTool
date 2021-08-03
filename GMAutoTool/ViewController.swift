@@ -216,7 +216,12 @@ class ViewController: NSViewController {
             
         }
     }
-
+    
+    @IBAction func onActionRollBack(_ sender: NSButton) {
+        //还原方法
+        
+    }
+    
     func showLogInView() {
         logString.append("\n")
         DispatchQueue.main.async {

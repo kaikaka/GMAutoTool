@@ -265,6 +265,9 @@
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
+                                <connections>
+                                    <action selector="onActionRollBack:" target="XfG-lQ-9wD" id="Dld-bA-sky"/>
+                                </connections>
                             </button>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="iXR-SZ-oTu">
                                 <rect key="frame" x="373" y="13" width="80" height="32"/>

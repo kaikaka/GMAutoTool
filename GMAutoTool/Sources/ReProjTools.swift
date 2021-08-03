@@ -181,7 +181,9 @@ class ReProjTools: NSObject {
                 target = item
             }
         }
-
+        
+        if target.buildConfigurationList.isNone { return }
+        
         let buildConfigurationList = target.buildConfigurationList!
         let keyIdentifier = "PRODUCT_BUNDLE_IDENTIFIER"
         let infoPath = "INFOPLIST_FILE"
@@ -192,21 +194,21 @@ class ReProjTools: NSObject {
         for buildConfigurations in buildConfigurationList.buildConfigurations {
             if buildConfigurations.buildSettings[keyIdentifier] != nil {
                 buildConfigurations.buildSettings[keyIdentifier] = "com.fooww.\(vable.newEnNameTarget.or("").lowercased())"
-                blockExec("修改bundle id~")
+                blockExec("修改project -> bundle id~")
             }
             if buildConfigurations.buildSettings[infoPath] != nil {
                 let setsValue = buildConfigurations.buildSettings[infoPath]
                 if let info = setsValue as? String, info.contains("Foowwphone") {
                     buildConfigurations.buildSettings[infoPath] = "Foowwphone/Assets/\(vable.newEnNameTarget.or(""))/Info.plist"
                 }
-                blockExec("修改Info.plist路径~")
+                blockExec("修改project -> Info.plist路径~")
             }
             if buildConfigurations.buildSettings[marcors] != nil {
                 let setsValue = buildConfigurations.buildSettings[marcors] as? Array<String>
                 if setsValue != nil {
                     buildConfigurations.buildSettings[marcors] = ["$(inherited)", "COCOAPODS=1", "NDEBUG=1", "\(vable.newEnNameTarget.or(""))=1"]
                 }
-                blockExec("修改Macros宏定义~")
+                blockExec("修改project -> Macros宏定义~")
             }
         }
         let error: ()? = try? xcodeproj.write(pathString: vable.projectTruePath, override: true)
