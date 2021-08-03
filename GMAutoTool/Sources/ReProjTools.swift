@@ -59,6 +59,7 @@ class ReProjTools: NSObject {
         if replaceTargetValue(vable, rb: rb) {
             // 1.读取脚本目录 path 脚本目录
             // 2.launchPath 要执行的脚本路径，ruby\/bin/ls
+            // 3./usr/bin/ruby ruby路径，报错改launchPath
             let res = ReProjTools.shell(launchPath: "/usr/bin/ruby", arguments: [rb])
 //            print(res)
             if res.1 == 0 {
@@ -389,6 +390,7 @@ class ReProjTools: NSObject {
         if let er = error {
             if er == () {
                 // 执行pods命令
+                // /usr/local/bin/pod路径，报错修改launchPath
                 let res = ReProjTools.shell(launchPath: "/usr/local/bin/pod", arguments: ["install", "--project-directory=\(podFilePath)"])
                 if res.1 == 0 {
                     print("Exec Success")
