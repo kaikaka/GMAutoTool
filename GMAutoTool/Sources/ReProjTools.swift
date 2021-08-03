@@ -387,7 +387,7 @@ class ReProjTools: NSObject {
         let fileBundle = Bundle(path: podFilePath)
         guard let url = fileBundle?.url(forResource: "Podfile", withExtension: "") else { return }
         let readString = try? String(contentsOf: url, encoding: String.Encoding.utf8)
-        let newReadString = readString!.replacingOccurrences(of: "end\nend\n", with: "end\n  target \'\(vable.newEnNameTarget.or(""))\' do\n  end\nend\n")
+        let newReadString = readString!.replacingOccurrences(of: "target \'\(vable.sourceNameTarget.or(""))\' do\n  end", with: "target \'\(vable.sourceNameTarget.or(""))\' do\n  end\n  target \'\(vable.newEnNameTarget.or(""))\' do\n  end\n")
         let error: ()? = try? newReadString.write(to: url, atomically: true, encoding: String.Encoding.utf8)
         if let er = error {
             if er == () {
