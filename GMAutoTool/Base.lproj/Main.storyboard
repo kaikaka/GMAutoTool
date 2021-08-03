@@ -332,7 +332,7 @@
                                     <constraint firstAttribute="height" constant="19" id="5Q4-Xi-AIL"/>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="54" id="yKK-eI-6iw"/>
                                 </constraints>
-                                <textFieldCell key="cell" lineBreakMode="clipping" alignment="left" title="Baidu Id" id="UJO-jR-Old">
+                                <textFieldCell key="cell" lineBreakMode="clipping" alignment="left" title="MapAK" id="UJO-jR-Old">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
