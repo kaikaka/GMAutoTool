@@ -63,12 +63,12 @@ class ReProjTools: NSObject {
 //            print(res)
             if res.1 == 0 {
 //                print("Duplicate Success")
-                blockExec(" 复制 \(vable.sourceNameTarget.or("Target")) 成功~")
+                blockExec("复制 \(vable.sourceNameTarget.or("Target")) 成功~")
             } else {
-                blockExec(" 复制 \(vable.sourceNameTarget.or("Target")) 失败~")
+                blockExec("复制 \(vable.sourceNameTarget.or("Target")) 失败~")
             }
         } else {
-            blockExec(" 复制 \(vable.sourceNameTarget.or("Target")) 失败~")
+            blockExec("复制 \(vable.sourceNameTarget.or("Target")) 失败~")
         }
     }
 
@@ -178,12 +178,7 @@ class ReProjTools: NSObject {
         
         for buildConfigurations in buildConfigurationList.buildConfigurations {
             if buildConfigurations.buildSettings[keyIdentifier] != nil {
-                let setsValue = buildConfigurations.buildSettings[keyIdentifier]
-                if let buildId = setsValue as? String, buildId.contains("com.fooww") {
-                    buildConfigurations.buildSettings[keyIdentifier] = vable.buildId.or(_:)
-                } else {
-                    buildConfigurations.buildSettings[keyIdentifier] = "com.fooww.\(vable.buildId.or(""))"
-                }
+                buildConfigurations.buildSettings[keyIdentifier] = "com.fooww.\(vable.newEnNameTarget.or("").lowercased())"
                 blockExec("修改bundle id~")
             }
             if buildConfigurations.buildSettings[infoPath] != nil {
@@ -241,6 +236,7 @@ class ReProjTools: NSObject {
 
         if let colorDict = NSDictionary(contentsOfFile: newPath) as? NSMutableDictionary {
             colorDict["mainColor"] = vable.mainColor
+            colorDict["mainNavColor"] = vable.mainColor
             let error = colorDict.write(toFile: newPath, atomically: true)
             if error {
                 blockExec("修改ColorConfig成功~")
@@ -439,8 +435,6 @@ struct ProjVariable {
     var newCnNameTarget: String?
     /// 新的应用名称(英文)
     var newEnNameTarget: String?
-    /// 冠名Build Id
-    var buildId: String?
     /// 冠名颜色，十六位颜色字符串
     var mainColor: String?
     /// FwSoftId,冠名公司Id

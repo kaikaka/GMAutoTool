@@ -17,7 +17,6 @@ class ViewController: NSViewController {
 
     @IBOutlet var targetCnName: NSTextField!
     @IBOutlet var targetEnName: NSTextField!
-    @IBOutlet var buildIdTextFiled: NSTextField!
     @IBOutlet var colorTextFiled: NSTextField!
     @IBOutlet var appIdTextFiled: NSTextField!
     @IBOutlet var baiduIdTextField: NSTextField!
@@ -103,7 +102,6 @@ class ViewController: NSViewController {
         projectProperty.newEnNameTarget = targetEnName.stringValue
         projectProperty.sourceNameTarget = targetPopupItems.selectedItem?.title
         projectProperty.newCnNameTarget = targetCnName.stringValue
-        projectProperty.buildId = buildIdTextFiled.stringValue
         projectProperty.mainColor = colorTextFiled.stringValue
         projectProperty.appID = appIdTextFiled.stringValue
         projectProperty.baiduSkdId = baiduIdTextField.stringValue
@@ -131,11 +129,6 @@ class ViewController: NSViewController {
         }
         if targetPopupItems.itemTitles.contains(projectProperty.newEnNameTarget.or("")) {
             showAlert("不能添加重复的冠名")
-            return
-        }
-
-        if projectProperty.buildId.or("").count == 0 {
-            showAlert("请填写buildId,eg:com.fooww.\(projectProperty.sourceNameTarget.or("").lowercased())")
             return
         }
         if projectProperty.mainColor.or("").count == 0 {
@@ -218,8 +211,11 @@ class ViewController: NSViewController {
         serialQueue.async {
             self.projTools.execCocoaPods(self.projectProperty)
             group.leave()
+            
         }
-        logString.append("------冠名结束------\n")
+        group.notify(queue: DispatchQueue.main) {
+            self.logString.append("------冠名结束------\n")
+        }
     }
 
     func showLogInView() {
