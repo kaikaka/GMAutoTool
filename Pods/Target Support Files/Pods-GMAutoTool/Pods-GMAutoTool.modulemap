@@ -1,0 +1,6 @@
+framework module Pods_GMAutoTool {
+  umbrella header "Pods-GMAutoTool-umbrella.h"
+
+  export *
+  module * { export * }
+}

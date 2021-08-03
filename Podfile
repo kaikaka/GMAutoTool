@@ -1,21 +1,21 @@
 # Uncomment the next line to define a global platform for your project
 # platform :ios, '10.0'
 
-target 'CrownName' do
+target 'GMAutoTool' do
   # Comment the next line if you don't want to use dynamic frameworks
   use_frameworks!
 pod 'CommandLineKit'
 pod 'PathKit'
 pod 'xcodeproj'
 
-  # Pods for CrownName
+  # Pods for GMAutoTool
 
-  target 'CrownNameTests' do
+  target 'GMAutoToolTests' do
     inherit! :search_paths
     # Pods for testing
   end
 
-  target 'CrownNameUITests' do
+  target 'GMAutoToolUITests' do
     # Pods for testing
   end
 
