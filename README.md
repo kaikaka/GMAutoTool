@@ -3,5 +3,5 @@
 
 - 如果执行报错，说明安装的ruby环境不是默认的系统环境，请检测你的ruby环境：
 - `which ruby` eg:/Users/Yoon/.rvm/rubies/ruby-2.6.0/bin/ruby
-- `which pod` eg:/Users/Yoon/.rvm/gems/ruby-2.6.0/bin/pod
+- `gem env` 找到SHELL PATH，替换路径 eg:/Users/Yoon/.rvm/rubies/ruby-2.6.0/lib/ruby/gems/2.6.0/wrappers/pod
 - 然后将这两个路径分别放到execDuplicteTarget方法和execCocoaPods方法
