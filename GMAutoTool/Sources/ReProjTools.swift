@@ -357,7 +357,7 @@ class ReProjTools: NSObject {
             // 修改配置文件
             let data = fileManager.contents(atPath: gToPath + "/Contents.json")!
             let readString = String(data: data, encoding: String.Encoding.utf8)
-            let newReadString = readString!.replacingOccurrences(of: "boan", with: newTargetName)
+            let newReadString = readString!.replacingOccurrences(of: "\(vable.sourceNameTarget.or(""))", with: newTargetName)
             try newReadString.write(to: URL(string: "file://\(gToPath)/Contents.json")!, atomically: true, encoding: String.Encoding.utf8)
         } catch {}
     }
