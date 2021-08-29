@@ -28,9 +28,15 @@ target.build_configurations.map do |item|
 end
 
 # copy build_phases
-src_target.build_phases.each do |phase|
-  target.build_phases << phase
-end
+#src_target.build_phases.each do |phase|
+#  target.build_phases << phase
+#end
 
+src_target.build_phases.each do |klass|
+    disName = klass.display_name
+    if disName != "Resources"
+        target.build_phases << klass
+    end
+end
 
 proj.save

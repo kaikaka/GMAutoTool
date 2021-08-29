@@ -61,7 +61,7 @@ class ReProjTools: NSObject {
             // 2.launchPath 要执行的脚本路径，ruby\/bin/ls
             // 3./usr/bin/ruby ruby路径，报错改launchPath
             let res = ReProjTools.shell(launchPath: "/usr/bin/ruby", arguments: [rb])
-//            print(res)
+            print(res)
             if res.1 == 0 {
 //                print("Duplicate Success")
                 blockExec("复制 \(vable.sourceNameTarget.or("Target")) 成功~")
@@ -115,6 +115,7 @@ class ReProjTools: NSObject {
                 if let er = error {
                     if er == () {
                         let res = ReProjTools.shell(launchPath: "/usr/bin/ruby", arguments: [rb])
+                        print(res)
                         if res.1 == 0 {
 //                            print("Exec Success")
                             blockExec("添加目录文件 成功~")
@@ -131,8 +132,68 @@ class ReProjTools: NSObject {
             }
         }
     }
+    
+    ///复制Resources
+    func copyBuildPhasesResources(_ vable: ProjVariable) {
+        guard let xcodeproj = try? XcodeProj(pathString: vable.projectTruePath) else { return }
+        guard let target = xcodeproj.pbxproj.nativeTargets.compactMap({ target -> PBXNativeTarget? in
+            if target.name == vable.newEnNameTarget {
+                return target
+            }
+            return nil
+        }).first else { return }
+        
+        guard let sourceTarget = xcodeproj.pbxproj.nativeTargets.compactMap({ target -> PBXNativeTarget? in
+            if target.name == vable.sourceNameTarget {
+                return target
+            }
+            return nil
+        }).first else { return }
+        
+        var array:[PBXBuildFile] = []
+        
+        for file in sourceTarget.buildPhases {
+            if file.name() == "Resources" {
+                if let files = file.files {
+                    for item in files {
+                        if let path = item.file?.path,path == "Launch Screen.storyboard" {
+                            continue
+                        }
+                        if let path = item.file?.path,path == "Only.xcassets" {
+                            continue
+                        }
+                        if let path = item.file?.path,path == "ColorConfig.plist" {
+                            continue
+                        }
+                        if let path = item.file?.path,path == "Info.plist" {
+                            continue
+                        }
+                        array.append(item)
+                    }
+                }
+            }
+        }
+        for file in target.buildPhases {
+            if file.name() == "Resources" {
+                if let files = file.files {
+                    file.files = files + array
+                } else {
+                    file.files = array
+                }
+            }
+        }
 
-    /// 移除Frameworks 和 多余的Launch Screen.storyboard 索引
+        let error: ()? = try? xcodeproj.write(pathString: vable.projectTruePath, override: true)
+        if let er = error, er == () {
+            blockExec("复制Resources 成功~")
+        } else if error == nil {
+            blockExec("复制Resources 成功~")
+        } else {
+            blockExec("复制Resources 失败~")
+        }
+    }
+
+    /// 移除Frameworks 和 多余的Info.plist 索引
     func remResourceFileRef(_ vable: ProjVariable) {
         guard let xcodeproj = try? XcodeProj(pathString: vable.projectTruePath) else { return }
         guard let target = xcodeproj.pbxproj.nativeTargets.compactMap({ target -> PBXNativeTarget? in
@@ -141,7 +202,7 @@ class ReProjTools: NSObject {
             }
             return nil
         }).first else { return }
-
+        
         for file in target.buildPhases {
             if file.name() == "Frameworks" {
                 if let files = file.files, files.count < 10 {
@@ -152,7 +213,7 @@ class ReProjTools: NSObject {
             if file.name() == "Resources" {
                 if var files = file.files, files.count > 10 {
                     for item in files {
-                        if let path = item.file?.path,path == "Launch Screen.storyboard" {
+                        if let path = item.file?.path,path == "Info.plist" {
                             let idx = files.firstIndex(of: item) ?? 0
                             files.remove(at: idx)
                         }
@@ -160,7 +221,22 @@ class ReProjTools: NSObject {
                     file.files = files
                 }
             }
-            
+            if file.name() == "Frameworks" {
+                if var files = file.files, files.count > 10 {
+                    for item in files {
+                        if let path = item.file?.path,path.contains("libPods") {
+                            item.file?.path = "libPods-Common-\(vable.newEnNameTarget ?? "").a"
+                        }
+                    }
+                    files = files.compactMap({ tf in
+                        if let sp = tf.file?.path, sp.count > 0 {
+                            return tf
+                        }
+                        return nil
+                    })
+                    file.files = files
+                }
+            }
         }
         let error: ()? = try? xcodeproj.write(pathString: vable.projectTruePath, override: true)
         if let er = error, er == () {
@@ -230,7 +306,7 @@ class ReProjTools: NSObject {
         if let colorDict = NSDictionary(contentsOfFile: newPath) as? NSMutableDictionary {
             colorDict["AppAbstract"] = vable.companyInfo
             colorDict["FWSoftID"] = vable.appID
-            colorDict["BaiduMapAk"] = vable.baiduSkdId
+            colorDict["BaiduMapAK"] = vable.baiduSkdId
             colorDict["CFBundleDisplayName"] = vable.newCnNameTarget
             let error = colorDict.write(toFile: newPath, atomically: true)
             print(error)
@@ -394,6 +470,7 @@ class ReProjTools: NSObject {
                 // 执行pods命令
                 // /usr/local/bin/pod路径，报错修改launchPath
                 let res = ReProjTools.shell(launchPath: "/usr/local/bin/pod", arguments: ["install", "--project-directory=\(podFilePath)"])
+                print(res)
                 if res.1 == 0 {
                     print("Exec Success")
                     blockExec("执行pod install命令成功~")

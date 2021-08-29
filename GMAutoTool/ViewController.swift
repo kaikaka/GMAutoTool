@@ -108,54 +108,54 @@ class ViewController: NSViewController {
         projectProperty.baiduSkdId = baiduIdTextField.stringValue
         projectProperty.companyInfo = companyInfoTextField.stringValue
 
-        if projectProperty.projectPath.isNone {
-            showAlert("请选择项目路径")
-            return
-        }
-        if projectProperty.imagePath.isNone {
-            showAlert("请选择图片素材路径")
-            return
-        }
-        if projectProperty.sourceNameTarget.isNone {
-            showAlert("请选择要复制的target")
-            return
-        }
-        if projectProperty.newCnNameTarget.or("").count == 0 {
-            showAlert("请填写应用名称")
-            return
-        }
-        if projectProperty.newEnNameTarget.or("").count == 0 {
-            showAlert("请填写target名称,eg:\(projectProperty.sourceNameTarget.or("DaiShu"))")
-            return
-        }
-        if targetPopupItems.itemTitles.contains(projectProperty.newEnNameTarget.or("")) {
-            showAlert("不能添加重复的冠名")
-            return
-        }
-        if projectProperty.mainColor.or("").count == 0 {
-            showAlert("请填写十六进制mainColor,eg:000000")
-            return
-        }
-        if projectProperty.mainColor?.count != 6 {
-            showAlert("请填写6位mainColor,eg:000000")
-            return
-        }
-        if projectProperty.appID.or("").count == 0 {
-            showAlert("请填写App id,eg:702222")
-            return
-        }
-        if projectProperty.appID?.count != 6 {
-            showAlert("请填写6位appID,eg:702222")
-            return
-        }
-        if projectProperty.baiduSkdId.or("").count == 0 {
-            showAlert("请填写百度地图sdk id")
-            return
-        }
-        if projectProperty.companyInfo.or("").count == 0 {
-            showAlert("请填写公司简介")
-            return
-        }
+//        if projectProperty.projectPath.isNone {
+//            showAlert("请选择项目路径")
+//            return
+//        }
+//        if projectProperty.imagePath.isNone {
+//            showAlert("请选择图片素材路径")
+//            return
+//        }
+//        if projectProperty.sourceNameTarget.isNone {
+//            showAlert("请选择要复制的target")
+//            return
+//        }
+//        if projectProperty.newCnNameTarget.or("").count == 0 {
+//            showAlert("请填写应用名称")
+//            return
+//        }
+//        if projectProperty.newEnNameTarget.or("").count == 0 {
+//            showAlert("请填写target名称,eg:\(projectProperty.sourceNameTarget.or("DaiShu"))")
+//            return
+//        }
+//        if targetPopupItems.itemTitles.contains(projectProperty.newEnNameTarget.or("")) {
+//            showAlert("不能添加重复的冠名")
+//            return
+//        }
+//        if projectProperty.mainColor.or("").count == 0 {
+//            showAlert("请填写十六进制mainColor,eg:000000")
+//            return
+//        }
+//        if projectProperty.mainColor?.count != 6 {
+//            showAlert("请填写6位mainColor,eg:000000")
+//            return
+//        }
+//        if projectProperty.appID.or("").count == 0 {
+//            showAlert("请填写App id,eg:702222")
+//            return
+//        }
+//        if projectProperty.appID?.count != 6 {
+//            showAlert("请填写6位appID,eg:702222")
+//            return
+//        }
+//        if projectProperty.baiduSkdId.or("").count == 0 {
+//            showAlert("请填写百度地图sdk id")
+//            return
+//        }
+//        if projectProperty.companyInfo.or("").count == 0 {
+//            showAlert("请填写公司简介")
+//            return
+//        }
         beginCrown()
     }
 
@@ -168,21 +168,31 @@ class ViewController: NSViewController {
             self.duplicateTarget()
             group.leave()
         }
-        group.enter()
-        serialQueue.async {
-            self.projTools.remResourceFileRef(self.projectProperty)
-            group.leave()
-        }
+
         group.enter()
         serialQueue.async {
             self.projTools.copySource(self.projectProperty)
             group.leave()
         }
+
         group.enter()
         serialQueue.async {
             self.projTools.addGroupFileReference(vable: self.projectProperty)
             group.leave()
         }
+
+        group.enter()
+        serialQueue.async {
+            self.projTools.copyBuildPhasesResources(self.projectProperty)
+            group.leave()
+        }
+
+        group.enter()
+        serialQueue.async {
+            self.projTools.remResourceFileRef(self.projectProperty)
+            group.leave()
+        }
+        
         group.enter()
         serialQueue.async {
             self.projTools.modifyInfoSettings(self.projectProperty)
